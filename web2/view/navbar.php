@@ -1,9 +1,5 @@
 <?php
 	$path = "/bootstrap/web2/";
-	$model = $path . "model/";
-	$index = $path . "index.php";
-	include($path);
-	//include_once($index);
 ?>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">

@@ -7,9 +7,9 @@ class WebsiteFunctions {
     }
 
     
-private function addDoubleQuote($string){
-    return "\"" . $string . "\"";
-}
+    private function addDoubleQuote($string){
+        return "\"" . $string . "\"";
+    }
     /*@Description : List all the users from the database
      * @Inputs :
      * @Outputs :
@@ -27,27 +27,34 @@ private function addDoubleQuote($string){
         } catch (PDOException $err) {
             echo $err -> getMessage();
         }
+        $conn = NULL;
     }
     
     public function getUsers(){
-        require_once($this -> dbPath);
+        require($this -> dbPath);
         $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
-        $result = $conn -> query($query);
+        try {
+            $result = $conn -> query($query);
+        } catch (PDOException $err) {
+            echo $err -> getMessage();
+        }
+        $conn = NULL;
+        return $result;
     }
     
     public function usersXMLList($users){
-        $xml = new SimpleXMLElement("</xml>");
-        
+        $user = new SimpleXMLElement("<user></user>");
+        $br = "<br/>";
         foreach ($users as $key => $value) {
-            $user = $xml -> addChild("user");
             $user -> addChild("nom",$value["nom"]);
             $user -> addChild("prenom",$value["prenom"]);
             $user -> addChild("email",$value["email"]);
             $user -> addChild("tel",$value["tel"]);
             $user -> addChild("birthdate",$value["dateofbirth"]);
         }
-        Header("Content-type: text/xml");
-        print($xml->asXML());
+        $fd = fopen("users.xml", "w");
+        fwrite($fd, $user->asXML());
+        fclose($fd);
     }
     /*@Description : List all the users from the database
      * @Inputs :
