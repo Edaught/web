@@ -18,7 +18,7 @@
                 include_once ("../controller/function.php");
                 $websiteFunctions = new WebsiteFunctions;
                 $websiteFunctions -> usersView();
-                $websiteFunctions -> xmlUsersList();
+                $websiteFunctions -> usersXMLList();
 				?>
 			</div>
 		</div>
