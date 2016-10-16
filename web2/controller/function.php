@@ -6,6 +6,10 @@ class WebsiteFunctions {
         $this -> dbPath = "../model/conn.php";
     }
 
+    
+private function addDoubleQuote($string){
+    return "\"" . $string . "\"";
+}
     /*@Description : List all the users from the database
      * @Inputs :
      * @Outputs :
@@ -13,6 +17,10 @@ class WebsiteFunctions {
      * */
     public function addUser($nom, $prenom, $birthdate, $tel, $email, $password) {
         require_once ($this -> dbPath);
+        $nom = $this->addDoubleQuote($nom);
+        $prenom = $this->addDoubleQuote($prenom);
+        $email = $this->addDoubleQuote($email);
+        $password = $this->addDoubleQuote($password);
         $query = "INSERT INTO UsersA() values(" . $nom . "," . $prenom . "," . $tel . "," . $birthdate . "," . $email . "," . $password . ")";
         try {
             $result = $conn -> query($query);
@@ -31,11 +39,8 @@ class WebsiteFunctions {
         $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
         $result = $conn -> query($query);
         echo "<table class='table'> <thead><tr>";
-        foreach ($result as $key => $value) {
-            echo "<th>" . $key . "</th>";
-        }
         echo "</tr></thead><tbody>";
-        foreach ($query as $key => $value) {
+        foreach ($result as $key => $value) {
             echo "<tr>";
             echo "<td>" . $value["nom"] . "</td>";
             echo "<td>" . $value["prenom"] . "</td>";

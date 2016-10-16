@@ -11,9 +11,8 @@ include ($_SERVER["DOCUMENT_ROOT"] . "bootstrap/web2/controller/function.php");
 //TODO: ADD SERVER REQUEST METHOD
 $websiteFunctions = new WebsiteFunctions;
 $POSTArray = array($_POST["nom"], $_POST["prenom"], $_POST["birthdate"], $_POST["tel"], $_POST["password"], $_POST["email"]);
-$bool = $websiteFunctions -> testIsset($POSTArray);
-echo $bool;
-if (!$websiteFunctions -> testIsset($POSTArray)) {
+if ($websiteFunctions -> testIsset($POSTArray)) {
+	echo "hello <br/>";
 	//if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["birthdate"]) && isset($_POST["tel"]) && isset($_POST["password"]) && isset($_POST["email"]) && is_string($_POST["nom"]) && !empty($_POST["nom"]) && is_string($_POST["prenom"]) && !empty($_POST["prenom"]) && !empty($_POST["birthdate"]) && is_string($_POST["tel"]) && !empty($_POST["password"]) && !empty($_POST["email"])) {
 	$nom = $_POST["nom"];
 	$prenom = $_POST["prenom"];
