@@ -13,7 +13,7 @@
 		<div class="jumbotron">
 		    <?php include_once("navbar.php");
 		    ?>
-			<form date-toggle="date-validator" class="form-horizontal" role="form" method="POST" action="../model/function.php">
+			<form date-toggle="date-validator" class="form-horizontal" role="form" method="POST" action="../controller/function.php">
 				<div class="form-group">
 					<label class="control-label"> Nom : </label>
 					<input type="text" name="nom" class="form-control" placeholder="Nom" required>
