@@ -11,6 +11,8 @@
 <body>
 	<div class="container">
 		<div class="jumbotron">
+		    <?php include_once("navbar.php");
+		    ?>
 			<form date-toggle="date-validator" class="form-horizontal" role="form" method="POST" action="../model/function.php">
 				<div class="form-group">
 					<label class="control-label"> Nom : </label>

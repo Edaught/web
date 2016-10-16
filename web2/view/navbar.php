@@ -11,8 +11,8 @@
 		</div>
 		<ul class="nav navbar-nav">
 			<li class="active"><a href="../index.php">Home</a></li>
-			<li><a href="listusers.php">List des utilisateurs</a></li>
+			<li><a href="listusers.php">Liste des utilisateurs</a></li>
 			<li><a href="users.php">Add User</a></li> 
 		</ul>
 	</div>
-</nav>*
+</nav>
