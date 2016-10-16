@@ -28,7 +28,27 @@ private function addDoubleQuote($string){
             echo $err -> getMessage();
         }
     }
-
+    
+    public function getUsers(){
+        require_once($this -> dbPath);
+        $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
+        $result = $conn -> query($query);
+    }
+    
+    public function usersXMLList($users){
+        $xml = new SimpleXMLElement("</xml>");
+        
+        foreach ($users as $key => $value) {
+            $user = $xml -> addChild("user");
+            $user -> addChild("nom",$value["nom"]);
+            $user -> addChild("prenom",$value["prenom"]);
+            $user -> addChild("email",$value["email"]);
+            $user -> addChild("tel",$value["tel"]);
+            $user -> addChild("birthdate",$value["dateofbirth"]);
+        }
+        Header("Content-type: text/xml");
+        print($xml->asXML());
+    }
     /*@Description : List all the users from the database
      * @Inputs :
      * @Outputs :
