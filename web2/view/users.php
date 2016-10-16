@@ -18,7 +18,7 @@
 					<label class="control-label"> Nom : </label>
 					<input type="text" name="nom" class="form-control" placeholder="Nom" required>
 					<label class="control-label"> Prenom : </label>
-					<input type="text" name="nom" class="form-control" placeholder="Prenom" required>
+					<input type="text" name="prenom" class="form-control" placeholder="Prenom" required>
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label"> Date de naissance : </label>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label"> E-mail : </label>
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Email invalid" required>
+					<input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Email invalid" required>
 				</div>
 				<div class="form-group">
 					<label for="inputPassword" class="control-label"> Mot de passe : </label>
