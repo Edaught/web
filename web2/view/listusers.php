@@ -17,11 +17,11 @@
 				<?php
                 include_once ("../controller/function.php");
                 $websiteFunctions = new WebsiteFunctions;
-                //$websiteFunctions -> usersView();
-                $websiteFunctions -> usersXMLList($websiteFunctions -> getUsers());
+                $websiteFunctions -> usersView();
+                //$websiteFunctions -> usersXMLList($websiteFunctions -> getUsers());
 
 				?>
-				<script language="text/javascript"> alert(document.getElementById('myxml').innerHTML);​ </script>
+				
 			</div>
 		</div>
 	</body>

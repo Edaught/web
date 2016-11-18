@@ -9,11 +9,31 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+function checkmail(){
+	var email = document.geElementById("inputEmail").value;
+	if(email){
+		$.ajax({
+			type: 'post',
+			url: 'checkmail.php'
+			data: {
+				email=email,
+			}, success: function(response) {
+				$('#email_status').html(response);
+				if(response == "OK")
+					return true;
+				else
+					return false;
+			}
+		})
+	}
+}
+</script>
 	<div class="container">
 		<div class="jumbotron">
 		    <?php include_once("navbar.php");
 		    ?>
-			<form date-toggle="date-validator" class="form-horizontal" role="form" method="POST" action="../controller/action.php">
+			<form data-toggle="data-validator" class="form-horizontal" role="form" method="POST" action="../controller/action.php">
 				<div class="form-group">
 					<label class="control-label"> Nom : </label>
 					<input type="text" name="nom" class="form-control" placeholder="Nom" required>
@@ -47,4 +67,4 @@
 		</div>
 	</div>
 </body>
-</html>
+</html>		

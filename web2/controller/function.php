@@ -6,24 +6,31 @@ class WebsiteFunctions {
         $this -> dbPath = "../model/conn.php";
     }
 
-    
+    public function getdbPath(){
+        return $this -> dbPath;
+    }
+    /*@Description : Add doublequote to a string
+    * @Input: string
+    * @Output: string
+    */
     private function addDoubleQuote($string){
         return "\"" . $string . "\"";
     }
+
     /*@Description : List all the users from the database
      * @Inputs :
      * @Outputs :
      *
      * */
     public function addUser($nom, $prenom, $birthdate, $tel, $email, $password) {
-        require_once ($this -> dbPath);
+        require ($this -> dbPath);
         $nom = $this->addDoubleQuote($nom);
         $prenom = $this->addDoubleQuote($prenom);
         $email = $this->addDoubleQuote($email);
         $password = $this->addDoubleQuote($password);
         $query = "INSERT INTO UsersA() values(" . $nom . "," . $prenom . "," . $tel . "," . $birthdate . "," . $email . "," . $password . ")";
         try {
-            $result = $conn -> query($query);
+            $conn -> query($query);
         } catch (PDOException $err) {
             echo $err -> getMessage();
         }
@@ -42,10 +49,11 @@ class WebsiteFunctions {
         return $result;
     }
     
-    public function usersXMLList($users){
-        $user = new SimpleXMLElement("<user></user>");
+    public function usersXMLList($listUsers){
+        $users = new SimpleXMLElement("<users></users>");
         $br = "<br/>";
-        foreach ($users as $key => $value) {
+        foreach ($listUsers as $key => $value) {
+            $user = $users -> addChild("user");
             $user -> addChild("nom",$value["nom"]);
             $user -> addChild("prenom",$value["prenom"]);
             $user -> addChild("email",$value["email"]);
@@ -53,7 +61,7 @@ class WebsiteFunctions {
             $user -> addChild("birthdate",$value["dateofbirth"]);
         }
         $fd = fopen("users.xml", "w");
-        fwrite($fd, $user->asXML());
+        fwrite($fd, $users->asXML());
         fclose($fd);
     }
     /*@Description : List all the users from the database
@@ -62,7 +70,7 @@ class WebsiteFunctions {
      *
      * */
     public function usersView() {
-        require_once ($this -> dbPath);
+        require ($this -> dbPath);
         $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
         $result = $conn -> query($query);
         echo "<table class='table'> <thead><tr>";
@@ -84,26 +92,93 @@ class WebsiteFunctions {
      * @Outputs : boolean
      * */
     public function emailAlreadyExist($email) {
-        require_once ($this -> dbPath);
+        require ($this -> dbPath);
         $email = "\"" . $email . "\"";
         $query = "SELECT COUNT(*) FROM UsersA WHERE email=" . $email;
-        $result = $conn -> query($query, PDO::FETCH_NUM);
-        if ($result -> rowCount() == 1)
-            return True;
-        return False;
+        try {
+            $result = $conn -> query($query, PDO::FETCH_NUM);
+            if ($result -> rowCount() == 1)
+                return True;
+            return False;
+        }catch(PDOException $err){
+            echo $err -> getMessage();
+        }
     }
 
     /*@Description: Test if any element in the $array is set or empty return "False" otherwise return True
      * @Inputs: $array ($_POST or $_GET)
      * @Outputs: boolean
      * */
-    public function testIsset($array) {
+    public function testIssetEmpty($array) {
         foreach ($array as $key) {
             if (!isset($key) || empty($key))
                 return False;
         }
         return True;
     }
+    
+    /*@Description: Generate a random UUID(Universally Unique Identifier)
+    * @Input: void
+    * @Output: int(9)
+    */ 
+    public function randomUUID(){
+      srand($this -> make_seed());
+      $randomUUID = rand();
+      $randomUUID = substr((string) $randomUUID,0,9);
+      return $randomUUID;
+  }
+
+  private function make_seed(){
+      list($usec, $sec) = explode(' ', microtime());
+      return (float) $sec + ((float) $usec * 100000);
+  }
+
+  public function addUUID($uuid,$email){
+    require($this -> dbPath);
+    $query = "INSERT INTO UUID() values(" . $uuid .",". $this->addDoubleQuote($email).")";
+    try{
+        $conn -> query($query);
+    }catch(PDOException $err){
+        echo $err -> getMessage();
+    }
+}
+
+public function checkUUIDExist($uuid){
+    require($this -> dbPath);
+    $query = "SELECT COUNT(*) FROM UUID WHERE uuid=" . $uuid;
+    try {
+        $result = $conn -> query($query, PDO::FETCH_NUM);
+        if ($result -> rowCount() == 1)
+            return True;
+        return False;
+    }catch(PDOException $err){
+        echo $err -> getMessage();
+    }
+}
+
+public function getUUIDByEmail($email){
+    require($this -> dbPath);
+    $query = "SELECT uuid FROM UUID WHERE email=" . $email;
+    try {
+        $result = $conn -> query($query, PDO::FETCH_ASSOC);
+        return $result->fetch()['uuid'];
+    }catch(PDOException $err){
+        echo $err -> getMessage();
+    }
+}
+
+public function getEmailByUUID($uuid){
+    require($this -> dbPath);
+    $query = "SELECT email FROM UUID WHERE uuid=" .$uuid;
+    try {
+        $result = $conn -> query($query, PDO::FETCH_ASSOC);
+        return $result->fetch()['email'];
+    }catch(PDOException $err){  
+        echo $err -> getMessage();
+    }    
+}
+    //TODO : Faire une fonction de logging dans un fichier
+    //TODO formatage des données
 
 }
 ?>

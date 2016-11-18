@@ -15,6 +15,7 @@
 		<?php include_once("view/navbar.php");?>
 			<div class="container">
 				<h1> Welcome to my awesome page !</h1>
+				<?php include_once("view/login.php");?>
 			</div>
 		</div>
 	</div>
