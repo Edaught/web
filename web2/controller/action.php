@@ -14,17 +14,19 @@ $POSTArray = array($_POST["nom"], $_POST["prenom"], $_POST["birthdate"], $_POST[
 if ($websiteFunctions -> testIssetEmpty($POSTArray) 
 	&& is_string($_POST["nom"]) 
 	&& is_string($_POST["prenom"]) 
-	&& is_string($_POST["tel"])) {
+	&& is_string($_POST["tel"])
+	&& $websiteFunctions -> emailAlreadyExist($_POST["email"])) {
 	$nom = $_POST["nom"];
 	$prenom = $_POST["prenom"];
-	$birthdate = $_POST["birthdate"];
+	$birthdate = $_POST["birthdate"]; //need to explode "-" and format yyyy-mm-dd
 	$tel = $_POST["tel"];
 	$password = $_POST["password"];
 	$email = $_POST["email"];
 	$uuid = $websiteFunctions -> randomUUID();
 	$websiteFunctions -> addUser($nom, $prenom, $birthdate, $tel, $email, md5($password));
 	$websiteFunctions -> addUUID($uuid,$email);
-	header('Location: ../index.php');
-	//header("Location: confirm.php?uuid=" . $websiteFunctions -> randomUUID());
+	header("Location: confirm.php?uuid=" . $websiteFunctions -> randomUUID());
+	exit;
 }
+header('Location: ../index.php');
 ?>

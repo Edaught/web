@@ -70,7 +70,7 @@ class WebsiteFunctions {
      *
      * */
     public function usersView() {
-        require ($this -> dbPath);
+        require($this -> dbPath);
         $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
         $result = $conn -> query($query);
         echo "<table class='table'> <thead><tr>";
