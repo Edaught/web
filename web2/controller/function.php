@@ -28,7 +28,11 @@ class WebsiteFunctions {
         $prenom = $this->addDoubleQuote($prenom);
         $email = $this->addDoubleQuote($email);
         $password = $this->addDoubleQuote($password);
+        $birthdate = date_format($birthdate,"Y-m-d");
         $birthdate = $this->addDoubleQuote($birthdate);
+        
+        //$birthdate = date('m-d-Y', strtotime($birthdate));
+        
         $query = "INSERT INTO Users() values(" . $nom . "," . $prenom . "," . $tel . "," . $birthdate . "," . $email . "," . $password . ")";
         try {
             $conn -> query($query);
