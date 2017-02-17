@@ -28,7 +28,8 @@ class WebsiteFunctions {
         $prenom = $this->addDoubleQuote($prenom);
         $email = $this->addDoubleQuote($email);
         $password = $this->addDoubleQuote($password);
-        $query = "INSERT INTO UsersA() values(" . $nom . "," . $prenom . "," . $tel . "," . $birthdate . "," . $email . "," . $password . ")";
+        $birthdate = $this->addDoubleQuote($birthdate);
+        $query = "INSERT INTO Users() values(" . $nom . "," . $prenom . "," . $tel . "," . $birthdate . "," . $email . "," . $password . ")";
         try {
             $conn -> query($query);
         } catch (PDOException $err) {
@@ -39,7 +40,7 @@ class WebsiteFunctions {
     
     public function getUsers(){
         require($this -> dbPath);
-        $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
+        $query = "SELECT nom,prenom,email,tel,birthdate FROM Users";
         try {
             $result = $conn -> query($query);
         } catch (PDOException $err) {
@@ -58,7 +59,7 @@ class WebsiteFunctions {
             $user -> addChild("prenom",$value["prenom"]);
             $user -> addChild("email",$value["email"]);
             $user -> addChild("tel",$value["tel"]);
-            $user -> addChild("birthdate",$value["dateofbirth"]);
+            $user -> addChild("birthdate",$value["birthdate"]);
         }
         $fd = fopen("users.xml", "w");
         fwrite($fd, $users->asXML());
@@ -71,7 +72,7 @@ class WebsiteFunctions {
      * */
     public function usersView() {
         require($this -> dbPath);
-        $query = "SELECT nom,prenom,email,tel,dateofbirth FROM UsersA";
+        $query = "SELECT nom,prenom,email,tel,birthdate FROM Users";
         $result = $conn -> query($query);
         echo "<table class='table'> <thead><tr>";
         echo "</tr></thead><tbody>";
@@ -81,7 +82,7 @@ class WebsiteFunctions {
             echo "<td>" . $value["prenom"] . "</td>";
             echo "<td>" . $value["email"] . "</td>";
             echo "<td>" . $value["tel"] . "</td>";
-            echo "<td>" . $value["dateofbirth"] . "</td>";
+            echo "<td>" . $value["birthdate"] . "</td>";
             echo "</tr>";
         }
         echo "</tbody></table>";
@@ -94,7 +95,7 @@ class WebsiteFunctions {
     public function emailAlreadyExist($email) {
         require ($this -> dbPath);
         $email = "\"" . $email . "\"";
-        $query = "SELECT COUNT(*) FROM UsersA WHERE email=" . $email;
+        $query = "SELECT COUNT(*) FROM Users WHERE email=" . $email;
         try {
             $result = $conn -> query($query, PDO::FETCH_NUM);
             if ($result -> rowCount() == 1)

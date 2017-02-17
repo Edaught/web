@@ -1,5 +1,5 @@
 <?php
-include ($_SERVER["DOCUMENT_ROOT"] . "bootstrap/web2/controller/function.php");
+include ($_SERVER["DOCUMENT_ROOT"] . "/web2/controller/function.php");
 
 /*@Description: This file is expecting a POST request containing variables needed to create a new user
  * POST variables(types): nom (string), prenom(string), birthdate(date), tel(string 10 num), password(string),
