@@ -1,5 +1,5 @@
 <?php
-	$path = "/bootstrap/web2/";
+	$path = "/web2/";
 ?>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
