@@ -53,6 +53,33 @@ class WebsiteFunctions {
         $conn = NULL;
         return $result;
     }
+
+    public function getUser($email){
+        require($this -> dbPath);
+        $query = "SELECT nom,prenom,email,tel,birthdate FROM Users WHERE email=" . $this->addDoubleQuote($email);
+        try {
+            $result = $conn -> query($query);
+        } catch (PDOException $err) {
+            echo $err -> getMessage();
+        }
+        $conn = NULL;
+        return $result;
+    }
+
+    public function userLogin($email,$password){
+        require($this -> dbPath);
+        $query = "SELECT COUNT(*) FROM Users WHERE email=" . $this->addDoubleQuote($email) . " AND password=" . $this->addDoubleQuote($password);
+        try{
+            $result = $conn -> query($query, PDO::FETCH_NUM);
+            if ($result -> rowCount() == 1)
+                return True;
+            return False;
+        }catch(PDOException $err){
+            echo $err->getMessage();
+        }
+        $conn = NULL;
+        return False;
+    }
     
     public function usersXMLList($listUsers){
         $users = new SimpleXMLElement("<users></users>");
@@ -163,7 +190,7 @@ public function checkUUIDExist($uuid){
 
 public function getUUIDByEmail($email){
     require($this -> dbPath);
-    $query = "SELECT uuid FROM UUID WHERE email=" . $email;
+    $query = "SELECT uuid FROM UUID WHERE email=" . $this->addDoubleQuote($email);
     try {
         $result = $conn -> query($query, PDO::FETCH_ASSOC);
         return $result->fetch()['uuid'];
